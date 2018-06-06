@@ -25,7 +25,7 @@ logout()
 
   this.communicator.loginStatus(null)
   this.r.navigate(['/login']);
-  console.log("logout")
+  console.log("logout0")
 }
 
  ngOnInit()
