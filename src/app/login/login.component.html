@@ -1,0 +1,34 @@
+Welcome to Autosys Job Portal
+
+Please sign in
+
+<form (submit)="authenticate()" #fcheck="ngForm" class="form-group">
+
+Username: <input type="text" [(ngModel)]="user.username" name="name" #uname="ngModel" required class="form-control">
+<br>
+
+<div *ngIf="uname.invalid">Username is required</div>
+
+Password: <input type="text" [(ngModel)]="user.pass" name="pass" #pass="ngModel" required class="form-control" >
+
+<div *ngIf="pass.invalid">Password is required</div>
+
+<input type="submit" value="Login" >
+
+</form>
+
+
+<div *ngIf="isAuthenticated==false">
+
+  Invalid username or password
+</div>
+
+<!--
+
+  ERROR Error: If ngModel is used within a form tag, either the name attribute must be set or the form
+      control must be defined as 'standalone' in ngModelOptions.
+
+      Example 1: <input [(ngModel)]="person.firstName" name="first">
+      Example 2: <input [(ngModel)]="person.firstName" [ngModelOptions]="{standalone: true}">
+
+-->

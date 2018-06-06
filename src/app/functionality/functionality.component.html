@@ -1,0 +1,27 @@
+
+
+<nav>
+
+<a [routerLink]="['/functionality','download']"> Download Report </a> 
+|
+<a [routerLink]="['/functionality','monitor',team,'S']">Monitor Jobs </a>
+|
+<a [routerLink]="['/functionality','register']" > Register Jobs </a>
+
+
+</nav>
+
+{{component}}
+<!--
+<app-register-job  [comp]="component" [teamname]="team" > </app-register-job>
+
+<app-monitor-jobs [comp]="component"  [teamname]="team" > </app-monitor-jobs>
+
+<app-download-report [comp]="component" [teamname]="team" > </app-download-report>
+-->
+
+<app-register-job  *ngIf="component=='register'" [teamname]="team" > </app-register-job>
+
+<app-monitor-jobs *ngIf="component=='monitor'"  [teamname]="team" > </app-monitor-jobs>
+
+<app-download-report *ngIf="component=='download'" [teamname]="team" > </app-download-report>

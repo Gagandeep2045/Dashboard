@@ -1,0 +1,67 @@
+
+
+
+<p>
+  monitor-jobs works!
+</p>
+{{teamname}}
+
+
+monitor pe hun
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-1">
+      <br><br>
+<nav *ngFor="let t of teams">
+<a [routerLink]="['/functionality','monitor',t,'All']">{{t}}</a>
+</nav>
+</div>
+
+<div class="col-sm-11">
+
+  <div class="row">
+    <nav>
+    <a [routerLink]="['/functionality','monitor',teamname,'All']">All</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'F']">Failed</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'R']">Running</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'S']">Success</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'OI']">On Ice</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'OH']">On Hold</a>
+    <a [routerLink]="['/functionality','monitor',teamname,'T']">Terminated</a>
+    </nav>
+  </div>
+
+  <div class="row">
+<table border="1">
+
+
+<tr>
+  <th>Sr No</th>
+  <th>Timestamp</th>
+  <th>Jobname</th>
+  <th>Start Time</th>
+  <th>End Time</th>
+  <th>Status</th>
+  <th>SLA Met</th>
+</tr>
+
+
+<tr *ngFor="let r of report ; let i=index">
+  <td>{{i+1}} </td>
+    
+    <td>{{r.timestamp}}</td>
+    <td> {{r.jobName}} </td>
+    <td> {{r.startTime}} </td>
+    <td> {{r.endTime}} </td>
+    <td> {{r.status}} </td>
+    <td> {{r.sla}} </td>
+  </tr>
+
+
+</table>
+</div>
+
+</div>
+</div>
+</div>

@@ -1,0 +1,141 @@
+To add bootstrap:
+1.npm install --save bootstrap
+2.@import "~bootstrap/dist/css/bootstrap.css" in styles.css file
+
+3.npm install --save @ng-bootstrap/ng-bootstrap   --> downloading equivalent of bootstrap.min.js and query.min.js
+4. 
+
+Bootstarp is css,javascript and html framework to quickly create 
+responsive webpage by using built in components.It uses mobile 
+first approach. 
+The mobile-first approach is exactly as it sounds:
+ designing for the smallest screen and working your way up.
+  It is one of the best strategies to create either a responsive 
+  or adaptive design
+
+  need to add bootstrap.min.js , bootstrap.min.css , jquery.min.j
+  
+  The .container class provides a responsive fixed width container
+The .container-fluid class provides a full width container, spanning the entire width of the viewport
+Container-fluid -> no padding
+container -> padding
+https://www.w3schools.com/bootstrap/bootstrap_grid_basic.asp
+
+Each row divided in 12 columns
+The Bootstrap grid system has four classes:
+xs (for phones - screens less than 768px wide)
+sm (for tablets - screens equal to or greater than 768px wide)
+md (for small laptops - screens equal to or greater than 992px wide)
+lg (for laptops and desktops - screens equal to or greater than 1200px wide)
+
+We used bootstrap to validate controls in template drivern forms of angular
+form-group , form-control are all bootstrap classes
+
+a) The login.component and app.component are not parent/child components, they are
+connected by router-outlet tag  . So for communictaion to happen between them we use a service
+and have BehaviorSubject in it. A method will be declared in this service here loginStatus which will be called
+by the component which want to send data. This method will insert the message to the BehaviorSubject object
+by calling next method.
+The component which want to recieve this data will inject the service and subsribe the message using Observable
+This receiving component must subsribe the message in ngOnInit method
+https://angularfirebase.com/lessons/sharing-data-between-angular-components-four-methods/
+b) in entire appln router-outlet can be there in only one place i.e app.component.html --> my observation
+
+c) If path is {path:"functionality/:component", component:FunctionalityComponent}
+you wish to migrate to functioanlity page after successful login then its must for you
+to specify full path i.e this.r.navigate(['/functionality',''])
+this wont work this.r.navigate(['funcationality'])
+as :component is mandatory not optional
+
+d) <router-outlet>
+is tag
+<a [routerLink]="[]"> Click here </a> --> [routerLink] is directive
+
+e)
+If the server is returning a non-json response, we need to tell HttpClient to expect a textual response using response object
+,as default response type of HttpClient is json object
+The observable returned will be of type String if response is of type text
+Eg in data-service.ts , we have 
+getTeamName(username:String): Observable<String>
+  {
+     return this.http.get("http://localhost:9091/team/"+username,{responseType:'text'}).pipe();
+
+  }
+
+  normally we do htto.get<String>(url).pipe()
+
+  but here we do
+  http.get(url,{responseType:'text'}).pipe()
+
+  f) in register-job.component.ts ,, we have
+  constructor(private ds:DataService) {
+    console.log("Consructor")
+
+
+   }
+
+  ngOnInit() {
+    console.log("oninit"+this.teamname)
+    this.ds.getJobsByTeam(this.teamname).subscribe(a=> {this.jobs=a ; console.log(a)})
+      
+  }
+
+  ngOnChanges()
+  {
+    console.log("onchanges"+this.teamname)
+    this.ds.getJobsByTeam(this.teamname).subscribe(a=> {this.jobs=a ; console.log(a)})
+
+  }
+Life cycle hooks
+f.1)
+After creating a component/directive by calling its constructor[that means constructor called in the beginning],
+angular calls the life cycle hook methods listed below
+f.2)
+ngOnChanges() ->It is called before ngOnInit(). Called as many times as angular re(set)s data bound input properties
+eg teamname,comp etc 
+f.3)ngOnInit() -> It is called only once after the first ngOnChanges() . Initializes the component after angular
+displays the data-bound properties and sets the input properties
+f.4)ngOnDestroy() -> It is used for clean up before angular destroys the directive/component. Unsubscribe Observables
+and detach event handlers to avoid memory leaks.
+
+Since we want the registered jobs to be fetched each time, so we place code in ngOnChanges()
+
+g)
+for register-job.component.ts,
+this.ds.registerJob(this.jobToBeRegistered).subscribe(a=>{console.log("Job "+JSON.stringify(a)+ " is registered")},
+err=>console.log(err),
+()=>{console.log("Registration completed"); this.jobs.push(this.jobToBeRegistered); this.jobToBeRegistered= new MonitoringJob()
+}
+)
+
+
+a post call is made to http://localhost:9091/registerJob, If an exception is thrown from server side(throw e in catch block) it is propogagated to angular
+. Angular only executes the err=>console.log(err) is subscribe method (the error is HttpErrorResponse for server side error)
+So 
+a=>{console.log("Job "+JSON.stringify(a)+ " is registered")} and 
+()=>{console.log("Registration completed"); this.jobs.push(this.jobToBeRegistered); this.jobToBeRegistered= new MonitoringJob()}
+are not executed
+
+
+
+h)
+in register-job.componenet.html
+We have used property binding which is a type of one way binding in 
+[disabled]="jobExists"
+<input type="button" value="Register Job" (click)="registerJob()"  [disabled]="jobExists">
+The register button will be disabled if job already exists
+
+We have used class binding which is a type of one way binding in 
+[ngClass]="{hasError : (jobExists), hasValid : cssValidApply}"
+
+<input type="text" placeholder="Enter job name" [(ngModel)]="jobToBeRegistered.jobName" (change)="jobAlreadyExists()" [ngClass]="{hasError : (jobExists), hasValid : cssValidApply}" >
+
+The text box will be bordered red in case the job name already exists and will display green if job name doesn't exist
+
+i)To create charts using chart.js
+npm install chart.js --save
+
+j) For highcharts refer summery-highchart.txt and highChartsDemo angular project
+
+i)
+All components will have access to the url through ActivatedRoute, so we can get the paramMap(Router ) from any component

@@ -1,0 +1,96 @@
+# install angular-highcharts and highcharts 
+npm i --save angular-highcharts highcharts
+ 
+# install highcharts typings 
+npm i --save-dev @types/highcharts
+
+To create chart without export as image,pdf feature
+
+1.In app.module.ts , mention ChartModule in imports
+
+2.In app.component.ts, mention a variable with any datatype
+eg chart: any
+
+Open https://www.highcharts.com/demo/pie-basic
+Copy pate entire .js code from any options
+ and assign that code into above declared chart variable
+
+'container' -> id of div where highchart will be built in html page
+
+
+ this.chart=Highcharts.chart('container', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+  },
+  title: {
+    text: 'Browser market shares in January, 2018'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+        style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+        }
+      }
+    }
+  },
+  series: [{
+    name: 'Brands',
+    colorByPoint: true,
+    data: [{
+      name: 'Chrome',
+      y: 61.41,
+      sliced: true,
+      selected: true
+    }, {
+      name: 'Internet Explorer',
+      y: 11.84
+    }, {
+      name: 'Firefox',
+      y: 10.85
+    }, {
+      name: 'Edge',
+      y: 4.67
+    }, {
+      name: 'Safari',
+      y: 4.18
+    }, {
+      name: 'Sogou Explorer',
+      y: 1.64
+    }, {
+      name: 'Opera',
+      y: 1.6
+    }, {
+      name: 'QQ',
+      y: 1.2
+    }, {
+      name: 'Other',
+      y: 2.61
+    }]
+  }]
+});
+
+Comment out lines which give compilation error
+
+3. In app.component.html
+
+Define a div tag with id = that mentioned above here container
+<div id="container"></div>
+
+4. 
+This is not working due to some cli version issue
+To enable exporting feature make following changes in app.module.ts
+roviders:[{provide:HIGHCHARTS_MODULES,useFactory:()=>[exporting]}],
+
+import {ChartModule,HIGHCHARTS_MODULES} from 'angular-highcharts'
+import exporting from 'highcharts/modules/exporting.src.js'

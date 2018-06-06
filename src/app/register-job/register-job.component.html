@@ -1,0 +1,41 @@
+
+
+  <p>
+  register-job works!
+</p>
+Following jobs are registered for {{teamname}}  team
+
+<div class="table-responsive">
+<table border="1"class="table table-striped table-hover table-dark">
+<tr><th>Id</th><th>Jobname</th><th>SLA</th></tr>
+
+<tr *ngFor="let job of jobs; let i=index">
+<td>{{i+1}}</td>
+<td>{{job.jobName}}</td>
+<td *ngIf="i!=editted">{{job.slaTime}}</td>
+<td *ngIf="i==editted"><input type="number" [(ngModel)]="newSla" [value]="job.slaTime"></td>
+<td *ngIf="i==editted"><input type="button" value="Change SLA" (click)="slaChange(job)" ></td>
+<td *ngIf="i!=editted"><input  type="button" value="Edit SLA" (click)="editted=i"></td>
+<td><input type="button" value="Remove" (click)="remove(job)"></td>
+</tr>
+
+<tr *ngIf="addClicked">
+  <td>{{jobs.length + 1}}</td>
+<td><input type="text" placeholder="Enter job name" [(ngModel)]="jobToBeRegistered.jobName" (change)="jobAlreadyExists()" [ngClass]="{hasError : (jobExists), hasValid : cssValidApply}" ></td>
+<td><input type="number" placeholder="Enter SLA" [(ngModel)]="jobToBeRegistered.slaTime"></td>
+<td><input type="button" value="Register Job" (click)="registerJob()"  [disabled]="jobExists"></td>
+</tr>
+
+<input type="button" value="Add Job" (click)="addClicked=true" >
+
+</table>
+
+<canvas id="ctx" ></canvas>
+</div>
+
+{{status}}
+
+<div id="high"></div>
+
+register pe hun
+
