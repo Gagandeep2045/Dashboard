@@ -1,3 +1,0 @@
-abc.txt        node_modules	  protractor.conf.js  tsconfig.json
-e2e	       package.json	  README.md	      tslint.json
-karma.conf.js  package-lock.json  src
