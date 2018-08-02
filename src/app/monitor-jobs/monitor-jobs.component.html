@@ -2,7 +2,7 @@
 
 
 <p>
-  monitor-jobs works!
+  monitor-jobs works! {{jobname}}
 </p>
 {{teamname}}
 
@@ -39,7 +39,12 @@ monitor pe hun
 <tr>
   <th>Sr No</th>
   <th>Timestamp</th>
-  <th>Jobname</th>
+  <th>
+    <select [(ngModel)]="jobname">
+      <option selected>All Jobnames</option>
+   <option *ngFor="let j of jobNames">{{j}}</option>
+  </select>
+  </th>
   <th>Start Time</th>
   <th>End Time</th>
   <th>Status</th>
@@ -47,7 +52,7 @@ monitor pe hun
 </tr>
 
 
-<tr *ngFor="let r of report ; let i=index">
+<tr *ngFor="let r of report | filterReportByJob : jobname  ; let i=index">
   <td>{{i+1}} </td>
     
     <td>{{r.timestamp}}</td>

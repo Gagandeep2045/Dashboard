@@ -14,7 +14,8 @@ import { MonitorJobsComponent } from './monitor-jobs/monitor-jobs.component'
 import {DataService} from './data.service'
 import { HttpClientModule } from '@angular/common/http';
 import {ChartsService} from './charts.service'
-import {ChartModule} from 'angular-highcharts'
+import {ChartModule} from 'angular-highcharts';
+import { FilterReportByJobPipe } from './filter-report-by-job.pipe'
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import {ChartModule} from 'angular-highcharts'
     FunctionalityComponent,
     RegisterJobComponent,
     DownloadReportComponent,
-    MonitorJobsComponent
+    MonitorJobsComponent,
+    FilterReportByJobPipe
   ],
   imports: [
     ChartModule, //for highcharts

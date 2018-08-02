@@ -25,6 +25,8 @@ status:String
   }
 
 report:JobReport[]
+jobNames:Set<String>
+jobname:String="All Jobnames"
   ngOnChanges()
   {
     this.ds.getAllTeams().subscribe(a=>{console.log(a); this.teams=a},err=>console.log(err))
@@ -34,7 +36,11 @@ report:JobReport[]
       this.status=a.get("status")
       console.log(a);
       this.ds.getJobsByTeamAndStatus(this.teamname,this.status).subscribe(a=>{console.log(a)
-     this.report=a }
+     this.report=a 
+     this.jobNames=new Set<String>()
+    this.report.map(a=>a.jobName).forEach(a=>this.jobNames.add(a))
+    console.log(this.jobNames)
+    }
     )
     
     }
